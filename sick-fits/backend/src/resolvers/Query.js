@@ -2,10 +2,12 @@
  * Resolves where exactly data comes where
  */
 
- const { forwardTo } = require('prisma-binding');
+const { forwardTo } = require('prisma-binding');
 
 const Query = {
-  items: forwardTo('db')
+  item: forwardTo('db'),
+  items: forwardTo('db'),
+  // below is commented out because the line above is the same thing (for learnsies!)
   // items(parent, args, ctx, info) {
   //   return ctx.db.query.items();
   // }
