@@ -24,6 +24,27 @@ const Mutations = {
     return ctx.db.mutation.updateItem({ data: updates, where: { id } }, info);
   },
 
+  async signin(parent, { email, password }, ctx, info) {
+    const user = await ctx.db.query.user({ where: { email } });
+    if (!user) {
+    }
+    const valid = await bcrypt.compare(password, user.password);
+    if (!user || !valid) {
+      throw new Error(`Invalid password or email address.`);
+    }
+    const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
+    ctx.response.cookie('token', token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 7, // one week cookie
+    });
+    return user;
+  },
+
+  signout(_, __, ctx) {
+    ctx.response.clearCookie('token');
+    return { message: 'Signed out' };
+  },
+
   async signup(parent, { email, password, name }, ctx, info) {
     email = email.toLowerCase();
     const hashedPassword = await bcrypt.hash(password, 10);

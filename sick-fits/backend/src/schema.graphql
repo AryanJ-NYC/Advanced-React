@@ -1,5 +1,9 @@
 # import * from './generated/prisma.graphql'
 
+type SuccessMessage {
+  message: String
+}
+
 """
 schema.graphql is the public-facing API
 """
@@ -11,12 +15,11 @@ type Mutation {
     image: String
     largeImage: String
   ): Item!
-
   deleteItem(id: ID!): Item
-
   updateItem(id: ID!, title: String, description: String, price: Int): Item!
-
-  signup(email: String!, password: String!, name: String!): User
+  signin(email: String!, password: String!): User
+  signout: SuccessMessage
+  signup(email: String!, password: String!, name: String!): User!
 }
 
 type Query {
