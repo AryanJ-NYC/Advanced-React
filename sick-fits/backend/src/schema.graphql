@@ -1,34 +1,35 @@
 # import * from './generated/prisma.graphql'
 
+"""
+schema.graphql is the public-facing API
+"""
 type SuccessMessage {
   message: String
 }
 
 """
-schema.graphql is the public-facing API
+Redefining public-facing User
 """
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  permissions: [Permission!]!
+}
+
 type Mutation {
-  createItem(
-    title: String
-    description: String
-    price: Int
-    image: String
-    largeImage: String
-  ): Item!
+  createItem(title: String, description: String, price: Int, image: String, largeImage: String): Item!
   deleteItem(id: ID!): Item
   updateItem(id: ID!, title: String, description: String, price: Int): Item!
+  requestResetToken(email: String!): SuccessMessage
+  resetPassword(resetToken: String!, password: String!, confirmPassword: String!): User!
   signin(email: String!, password: String!): User
   signout: SuccessMessage
   signup(email: String!, password: String!, name: String!): User!
 }
 
 type Query {
-  items(
-    where: ItemWhereInput
-    orderBy: ItemOrderByInput
-    skip: Int
-    first: Int
-  ): [Item]!
+  items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, first: Int): [Item]!
   item(where: ItemWhereUniqueInput!): Item
   itemsConnection(where: ItemWhereInput): ItemConnection!
   me: User
