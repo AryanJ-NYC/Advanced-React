@@ -21,7 +21,7 @@
   ],
   "env": {
     "APP_SECRET": "app-secret",
-    "PRISMA_ENDPOINT": "https://us1.prisma.sh/aryan-j-e0febe/sick-fits/dev",
+    "PRISMA_ENDPOINT": "https://us1.prisma.sh/aryan-j-e0febe/sick-fits/prod",
     "PRISMA_SECRET": "my-secret"
   },
   "routes": [
